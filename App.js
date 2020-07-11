@@ -1,5 +1,7 @@
 import React from "react";
 import { Text, View, StyleSheet } from "react-native";
+
+// the boiler plate to connect the redux to the app
 import { createStore, combineReducers } from "redux";
 import { Provider } from "react-redux";
 
