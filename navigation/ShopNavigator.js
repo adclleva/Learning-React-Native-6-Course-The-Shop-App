@@ -3,12 +3,15 @@ import { createStackNavigator } from "react-navigation-stack";
 import { Platform } from "react-native";
 
 import ProductsOverViewScreen from "../screens/shop/ProductOverviewScreen";
+import ProductDetailScreen from "../screens/shop/ProductDetailScreen";
 
 import Colors from "../constants/Colors";
 
 const ProductsNavigator = createStackNavigator(
   {
+    // these are keys for the navigation identifiers
     ProductsOverView: ProductsOverViewScreen,
+    ProductDetail: ProductDetailScreen,
   },
   {
     // the second argument is what configures the stack navigator

@@ -14,12 +14,18 @@ const ProductOverviewScreen = (props) => {
       renderItem={(itemData) => {
         const { item } = itemData;
         // itemData === { item, index, separators }, it gives you these props
+
         return (
           <ProductItem
             image={item.imageUrl}
             title={item.title}
             price={item.price}
-            onViewDetail={() => console.log(`View ${item.title} Details`)}
+            onViewDetail={() =>
+              props.navigation.navigate("ProductDetail", {
+                productId: item.id,
+                productTitle: item.title, // we'll pass down the title for the navigation header
+              })
+            }
             onAddToCart={() => console.log(`Added ${item.title} to cart`)}
           />
         );
