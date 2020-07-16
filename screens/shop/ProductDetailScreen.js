@@ -8,12 +8,15 @@ import {
   ScrollView,
 } from "react-native";
 
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Colors from "../../constants/Colors";
+import * as cartActions from "../../store/actions/cart";
 
 const ProductDetailScreen = (props) => {
   const { navigation } = props;
   const productId = navigation.getParam("productId"); // this will extract from the navigation props
+
+  const dispatch = useDispatch();
 
   // this will get the slice of state which in this case is products from the productsReducer
   const selectedProduct = useSelector((state) =>
@@ -28,7 +31,9 @@ const ProductDetailScreen = (props) => {
         <Button
           color={Colors.primary}
           title="Add to Cart"
-          onPress={() => console.log(`Added ${selectedProduct.title} to cart`)}
+          onPress={() => {
+            dispatch(cartActions.addToCart(selectedProduct));
+          }}
         />
       </View>
       <Text style={styles.price}>${selectedProduct.price.toFixed(2)}</Text>

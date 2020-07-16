@@ -5,16 +5,19 @@ import { createStore, combineReducers } from "redux";
 import { Provider } from "react-redux";
 import { AppLoading } from "expo";
 import * as Font from "expo-font";
+import { composeWithDevTools } from "redux-devtools-extension"; // this is for the react-native-debugger
 
 import productsReducer from "./store/reducers/product";
+import cartsReducer from "./store/reducers/cart";
 
 import ShopNavigator from "./navigation/ShopNavigator";
 
 const rootReducer = combineReducers({
   products: productsReducer,
+  cart: cartsReducer,
 });
 
-const store = createStore(rootReducer);
+const store = createStore(rootReducer, composeWithDevTools()); // make sure to remove the composeWithDevTools for production
 
 const fetchFonts = () => {
   return Font.loadAsync({

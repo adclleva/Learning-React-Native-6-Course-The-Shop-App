@@ -41,6 +41,8 @@ export default (state = initialState, action) => {
         },
         totalAmount: state.totalAmount + productPrice,
       };
+    default:
+      return state;
   }
 
   return state;

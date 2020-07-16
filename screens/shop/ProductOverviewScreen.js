@@ -1,12 +1,16 @@
 import React from "react";
 import { StyleSheet, Text, View, FlatList } from "react-native";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import ProductItem from "../../components/shop/ProductItem";
+import * as cartActions from "../../store/actions/cart";
 
 const ProductOverviewScreen = (props) => {
   // it retrieves the state as input and returns whatever we want to get from there
   // we'll be pulling from the state of the products reducer
   const products = useSelector((state) => state.products.availableProducts);
+
+  const dispatch = useDispatch();
+
   return (
     <FlatList
       data={products} // this is the array that we'll be using
@@ -26,7 +30,9 @@ const ProductOverviewScreen = (props) => {
                 productTitle: item.title, // we'll pass down the title for the navigation header
               })
             }
-            onAddToCart={() => console.log(`Added ${item.title} to cart`)}
+            onAddToCart={() => {
+              dispatch(cartActions.addToCart(item)); // the item is the specific Product class
+            }}
           />
         );
       }}
