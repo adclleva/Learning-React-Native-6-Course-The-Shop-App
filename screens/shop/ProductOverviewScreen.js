@@ -43,19 +43,26 @@ const ProductOverviewScreen = (props) => {
   );
 };
 
-ProductOverviewScreen.navigationOptions = {
-  headerTitle: "All Products",
-  headerRight: () => (
-    <HeaderButtons HeaderButtonComponent={HeaderButton}>
-      <Item
-        title="Cart"
-        // this will render a specific icon depending on the platform
-        // we can go here to check out the icons https://icons.expo.fyi/
-        iconName={Platform.OS === "android" ? "md-cart" : "ios-cart"}
-        onPress={() => {}}
-      />
-    </HeaderButtons>
-  ),
+// we switch over to a function because we're going to return and use the data that is being passed down
+// with the navigationOptions to navigate to the CartScreen
+ProductOverviewScreen.navigationOptions = (navData) => {
+  console.log("navData", navData);
+  return {
+    headerTitle: "All Products",
+    headerRight: () => (
+      <HeaderButtons HeaderButtonComponent={HeaderButton}>
+        <Item
+          title="Cart"
+          // this will render a specific icon depending on the platform
+          // we can go here to check out the icons https://icons.expo.fyi/
+          iconName={Platform.OS === "android" ? "md-cart" : "ios-cart"}
+          onPress={() => {
+            navData.navigation.navigate("Cart");
+          }}
+        />
+      </HeaderButtons>
+    ),
+  };
 };
 
 export default ProductOverviewScreen;
