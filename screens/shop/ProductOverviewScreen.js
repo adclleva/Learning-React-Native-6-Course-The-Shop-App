@@ -1,8 +1,11 @@
 import React from "react";
-import { StyleSheet, Text, View, FlatList } from "react-native";
+import { StyleSheet, Text, View, FlatList, Platform } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
+import { Item, HeaderButtons } from "react-navigation-header-buttons";
+
 import ProductItem from "../../components/shop/ProductItem";
-import * as cartActions from "../../store/actions/cart";
+import * as cartActions from "../../store/actions/cart"; // to get the action creators from Redux
+import HeaderButton from "../../components/UI/HeaderButton";
 
 const ProductOverviewScreen = (props) => {
   // it retrieves the state as input and returns whatever we want to get from there
@@ -42,6 +45,17 @@ const ProductOverviewScreen = (props) => {
 
 ProductOverviewScreen.navigationOptions = {
   headerTitle: "All Products",
+  headerRight: () => (
+    <HeaderButtons HeaderButtonComponent={HeaderButton}>
+      <Item
+        title="Cart"
+        // this will render a specific icon depending on the platform
+        // we can go here to check out the icons https://icons.expo.fyi/
+        iconName={Platform.OS === "android" ? "md-cart" : "ios-cart"}
+        onPress={() => {}}
+      />
+    </HeaderButtons>
+  ),
 };
 
 export default ProductOverviewScreen;
