@@ -6,13 +6,34 @@ import Colors from "../../constants/Colors";
 const CartScreen = () => {
   const cartTotalAmount = useSelector((state) => state.cart.totalAmount);
 
+  const cartItems = useSelector((state) => {
+    // we transform it because the state is an object and we want an array for the FlatList
+    const transformedCartItems = [];
+
+    for (const key in state.cart.items) {
+      transformedCartItems.push({
+        productId: key,
+        productTitle: state.cart.items[key].title,
+        productPrice: state.cart.items[key].price,
+        productQuantity: state.cart.items[key].quantity,
+        sum: state.cart.items[key].sum,
+      });
+    }
+    return transformedCartItems;
+  });
+
   return (
     <View style={styles.screen}>
       <View style={styles.summary}>
         <Text style={styles.summaryText}>
-          Total: <Text style={styles.amount}>${cartTotalAmount}</Text>
+          Total:{" "}
+          <Text style={styles.amount}>${cartTotalAmount.toFixed(2)}</Text>
         </Text>
-        <Button title="Order Now" />
+        <Button
+          color={Colors.accent}
+          title="Order Now"
+          disabled={cartItems.length === 0} // this checks if the cart is empty
+        />
       </View>
       <View>
         <Text>Cart Items</Text>

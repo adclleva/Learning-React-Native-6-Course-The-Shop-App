@@ -10,7 +10,7 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case ADD_TO_CART:
-      const addedProduct = action.product;
+      const addedProduct = action.product; // this is coming from the action creators
       const productPrice = addedProduct.price;
       const productTitle = addedProduct.title;
 

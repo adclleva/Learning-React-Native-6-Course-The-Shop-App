@@ -13,7 +13,7 @@ const ProductsNavigator = createStackNavigator(
     // these are keys for the navigation identifiers
     ProductsOverView: ProductsOverViewScreen,
     ProductDetail: ProductDetailScreen,
-    Cart: CartScreen,
+    Cart: CartScreen, // this is included in the stack to navigate from the header cart icon
   },
   {
     // the second argument is what configures the stack navigator

@@ -46,7 +46,6 @@ const ProductOverviewScreen = (props) => {
 // we switch over to a function because we're going to return and use the data that is being passed down
 // with the navigationOptions to navigate to the CartScreen
 ProductOverviewScreen.navigationOptions = (navData) => {
-  console.log("navData", navData);
   return {
     headerTitle: "All Products",
     headerRight: () => (
