@@ -1,4 +1,4 @@
-import { ADD_TO_CART } from "../actions/cart";
+import { ADD_TO_CART, REMOVE_FROM_CART } from "../actions/cart";
 import CartItem from "../../models/cart-item";
 
 const initialState = {
@@ -41,6 +41,35 @@ export default (state = initialState, action) => {
         },
         totalAmount: state.totalAmount + productPrice,
       };
+    case REMOVE_FROM_CART:
+      const selectCartItem = state.items[action.productId]; // to get the current cart item
+      const currentQuantity = selectCartItem.quantity; // we need the quantity to check whether to reduce or remove a cart item
+      let updatedCartItems;
+      // we need to reduce by one
+      if (currentQuantity > 1) {
+        const updatedCartItem = new CartItem(
+          selectCartItem.quantity - 1,
+          selectCartItem.productPrice,
+          selectCartItem.productTitle,
+          selectCartItem.sum - selectCartItem.productPrice
+        );
+
+        updatedCartItems = {
+          ...state.items,
+          [action.productId]: updatedCartItem,
+        };
+        // otherwise take out the whole product
+      } else {
+        updatedCartItems = { ...state.items }; // this will clone the state items
+        delete updatedCartItems[action.productId]; // this will delete a property of our items object
+      }
+
+      return {
+        ...state,
+        items: updatedCartItems,
+        totalAmount: state.totalAmount - selectCartItem.productPrice,
+      };
+
     default:
       return state;
   }
