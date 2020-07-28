@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, Text, View, FlatList, Button } from "react-native";
 import { useSelector } from "react-redux";
 import Colors from "../../constants/Colors";
+import CartItem from "../../components/shop/CartItem";
 
 const CartScreen = () => {
   const cartTotalAmount = useSelector((state) => state.cart.totalAmount);
@@ -13,15 +14,15 @@ const CartScreen = () => {
     for (const key in state.cart.items) {
       transformedCartItems.push({
         productId: key,
-        productTitle: state.cart.items[key].title,
-        productPrice: state.cart.items[key].price,
+        productTitle: state.cart.items[key].productTitle,
+        productPrice: state.cart.items[key].productPrice,
         productQuantity: state.cart.items[key].quantity,
         sum: state.cart.items[key].sum,
       });
     }
     return transformedCartItems;
   });
-
+  console.log("cartItems", cartItems);
   return (
     <View style={styles.screen}>
       <View style={styles.summary}>
@@ -35,9 +36,18 @@ const CartScreen = () => {
           disabled={cartItems.length === 0} // this checks if the cart is empty
         />
       </View>
-      <View>
-        <Text>Cart Items</Text>
-      </View>
+      <FlatList
+        data={cartItems}
+        keyExtractor={(item) => item.productId}
+        renderItem={(itemData) => (
+          <CartItem
+            quantity={itemData.item.productQuantity}
+            title={itemData.item.productTitle}
+            amount={itemData.item.sum}
+            onRemove={() => console.log("Remove")}
+          />
+        )}
+      />
     </View>
   );
 };
