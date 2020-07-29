@@ -9,12 +9,14 @@ import { composeWithDevTools } from "redux-devtools-extension"; // this is for t
 
 import productsReducer from "./store/reducers/product";
 import cartsReducer from "./store/reducers/cart";
+import ordersReducer from "./store/reducers/orders";
 
 import ShopNavigator from "./navigation/ShopNavigator";
 
 const rootReducer = combineReducers({
   products: productsReducer,
   cart: cartsReducer,
+  orders: ordersReducer,
 });
 
 const store = createStore(rootReducer, composeWithDevTools()); // make sure to remove the composeWithDevTools for production
