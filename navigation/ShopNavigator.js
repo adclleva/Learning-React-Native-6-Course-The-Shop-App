@@ -1,3 +1,4 @@
+import React from "react"; // we need to import react since we are rendering a component with the JSX syntax
 import { createAppContainer } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 import { createDrawerNavigator } from "react-navigation-drawer"; // this will be for the SideDrawer
@@ -9,6 +10,7 @@ import CartScreen from "../screens/shop/CartScreen";
 import OrdersScreen from "../screens/shop/OrdersScreen";
 
 import Colors from "../constants/Colors";
+import { Ionicons } from "@expo/vector-icons";
 
 const defaultNavigationOptions = {
   headerStyle: {
@@ -31,6 +33,16 @@ const ProductsNavigator = createStackNavigator(
     Cart: CartScreen, // this is included in the stack to navigate from the header cart icon
   },
   {
+    navigationOptions: {
+      // this is to have the icon be within the drawer
+      drawerIcon: (drawerConfig) => (
+        <Ionicons
+          name={Platform.OS === "android" ? "md-cart" : "ios-cart"}
+          size={23}
+          color={drawerConfig.tintColor}
+        />
+      ),
+    },
     // the second argument is what configures the stack navigator
     defaultNavigationOptions: defaultNavigationOptions,
   }
@@ -41,6 +53,16 @@ const OrdersNavigator = createStackNavigator(
     Orders: OrdersScreen,
   },
   {
+    navigationOptions: {
+      // this is to have the icon be within the drawer
+      drawerIcon: (drawerConfig) => (
+        <Ionicons
+          name={Platform.OS === "android" ? "md-list" : "ios-list"}
+          size={23}
+          color={drawerConfig.tintColor}
+        />
+      ),
+    },
     defaultNavigationOptions: defaultNavigationOptions,
   }
 );
