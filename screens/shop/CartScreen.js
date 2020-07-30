@@ -66,6 +66,11 @@ const CartScreen = () => {
 
 export default CartScreen;
 
+// to set up the header title for the nav bar
+CartScreen.navigationOptions = {
+  headerTitle: "You Orders",
+};
+
 const styles = StyleSheet.create({
   screen: {
     margin: 20,
