@@ -51,6 +51,7 @@ const CartScreen = () => {
         keyExtractor={(item) => item.productId}
         renderItem={(itemData) => (
           <CartItem
+            deletable // have this set here wil make it true
             quantity={itemData.item.productQuantity}
             title={itemData.item.productTitle}
             amount={itemData.item.sum}
