@@ -4,16 +4,15 @@ import {
   Text,
   View,
   Image,
-  Button,
   TouchableOpacity,
   TouchableNativeFeedback,
   Platform,
 } from "react-native";
-import Colors from "../../constants/Colors";
+
 // this will be a presentational component
 
 const ProductItem = (props) => {
-  const { image, title, price, onViewDetail, onAddToCart } = props;
+  const { image, title, price, onSelect } = props;
 
   let TouchableComponent =
     Platform.OS === "android" && Platform.Version >= 21
@@ -23,7 +22,7 @@ const ProductItem = (props) => {
   return (
     <View style={styles.product}>
       <View style={styles.touchable}>
-        <TouchableComponent onPress={onViewDetail} useForeground>
+        <TouchableComponent onPress={onSelect} useForeground>
           {/* useForeground is used for the TouchableNativeFeedback to have the 
         ripple affect shown in font of the elements */}
           <View>
@@ -34,18 +33,7 @@ const ProductItem = (props) => {
               <Text style={styles.title}>{title}</Text>
               <Text style={styles.price}>${price.toFixed(2)}</Text>
             </View>
-            <View style={styles.actions}>
-              <Button
-                color={Colors.primary}
-                title="View Details"
-                onPress={onViewDetail}
-              />
-              <Button
-                color={Colors.primary}
-                title="To Cart"
-                onPress={onAddToCart}
-              />
-            </View>
+            <View style={styles.actions}>{props.children}</View>
           </View>
         </TouchableComponent>
       </View>
