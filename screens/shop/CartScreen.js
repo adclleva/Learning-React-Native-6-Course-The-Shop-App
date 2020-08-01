@@ -35,7 +35,14 @@ const CartScreen = () => {
       <View style={styles.summary}>
         <Text style={styles.summaryText}>
           Total:{" "}
-          <Text style={styles.amount}>${cartTotalAmount.toFixed(2)}</Text>
+          <Text style={styles.amount}>
+            $
+            {
+              Math.round(
+                (cartTotalAmount.toFixed(2) * 100) / 100
+              ) /* this is to deal with the negative 0 when adding and subtracting from the cart*/
+            }
+          </Text>
         </Text>
         <Button
           color={Colors.accent}

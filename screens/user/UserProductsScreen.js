@@ -13,6 +13,13 @@ const UserProductsScreen = (props) => {
   const userProducts = useSelector((state) => state.products.userProducts);
   const dispatch = useDispatch();
 
+  // this handler will use the navigation navigate prop to move to a Edit Product screen
+  const editProductHandler = (id) => {
+    props.navigation.navigate("EditProduct", {
+      productId: id,
+    });
+  };
+
   return (
     <FlatList
       data={userProducts}
@@ -24,9 +31,17 @@ const UserProductsScreen = (props) => {
           image={item.imageUrl}
           title={item.title}
           price={item.price}
-          onSelect={() => {}}
+          onSelect={() => {
+            editProductHandler(item.id);
+          }}
         >
-          <Button color={Colors.primary} title="Edit" onPress={() => {}} />
+          <Button
+            color={Colors.primary}
+            title="Edit"
+            onPress={() => {
+              editProductHandler(item.id);
+            }}
+          />
           <Button
             color={Colors.primary}
             title="Delete"
@@ -53,6 +68,20 @@ UserProductsScreen.navigationOptions = (navData) => {
           onPress={() => {
             // this will open the side bar drawer
             navData.navigation.toggleDrawer();
+          }}
+        />
+      </HeaderButtons>
+    ),
+    headerRight: () => (
+      <HeaderButtons HeaderButtonComponent={HeaderButton}>
+        <Item
+          title="Add"
+          // this will render a specific icon depending on the platform
+          // we can go here to check out the icons https://icons.expo.fyi/
+          iconName={Platform.OS === "android" ? "md-create" : "ios-create"}
+          onPress={() => {
+            // this will open the side bar drawer
+            navData.navigation.navigate("EditProduct");
           }}
         />
       </HeaderButtons>
