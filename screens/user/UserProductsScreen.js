@@ -80,7 +80,7 @@ UserProductsScreen.navigationOptions = (navData) => {
           // we can go here to check out the icons https://icons.expo.fyi/
           iconName={Platform.OS === "android" ? "md-create" : "ios-create"}
           onPress={() => {
-            // this will open the side bar drawer
+            // this will navigate to the EditProduct page
             navData.navigation.navigate("EditProduct");
           }}
         />
