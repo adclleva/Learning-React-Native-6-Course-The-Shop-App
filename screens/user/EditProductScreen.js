@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   StyleSheet,
   Text,
@@ -25,6 +25,24 @@ const EditProductScreen = (props) => {
   const [description, setDescription] = useState(
     editedProduct ? editedProduct.description : ""
   );
+
+  /**
+   * we use this useEffect and useCallback pattern to pass the submitHandler
+   * to our params, the useCallback makes sure the function isn't recreated
+   * so it wont be entering an infinite loop
+   */
+  const submitHandler = useCallback(() => {
+    console.log("Submitting!");
+  }, []); // we make sure this is an empty array so it doesn't have to be re-created
+
+  /**
+   * this will render a function after every render cycle
+   * with the dependency of submitHandler, since it doesn't change,
+   * it only executes once
+   */
+  useEffect(() => {
+    props.navigation.setParams({ submit: submitHandler }); // now submit is a parameter that can be retrieved within the header
+  }, [submitHandler]);
 
   return (
     <ScrollView>
@@ -71,6 +89,7 @@ const EditProductScreen = (props) => {
 export default EditProductScreen;
 
 EditProductScreen.navigationOptions = (navData) => {
+  const submitFunction = navData.navigation.getParam("submit");
   return {
     // this will determine if we are creating or editing depending if a parameter was passed or not
     headerTitle: navData.navigation.getParam("productId")
@@ -85,10 +104,7 @@ EditProductScreen.navigationOptions = (navData) => {
           iconName={
             Platform.OS === "android" ? "md-checkmark" : "ios-checkmark"
           }
-          onPress={() => {
-            // this will open the side bar drawer
-            navData.navigation.navigate("EditProduct");
-          }}
+          onPress={() => submitFunction()}
         />
       </HeaderButtons>
     ),
