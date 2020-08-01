@@ -10,13 +10,20 @@ import {
 
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import HeaderButton from "../../components/UI/HeaderButton";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import * as productActions from "../../store/actions/product";
 
 const EditProductScreen = (props) => {
+  // this could be null if the user is just creating with no params passed down
   const productId = props.navigation.getParam("productId");
+
+  // this determines if we are creating or
   const editedProduct = useSelector((state) =>
     state.products.userProducts.find((product) => product.id === productId)
   );
+
+  const dispatch = useDispatch();
+
   const [title, setTitle] = useState(editedProduct ? editedProduct.title : "");
   const [imageUrl, setImageUrl] = useState(
     editedProduct ? editedProduct.imageUrl : ""
@@ -32,8 +39,27 @@ const EditProductScreen = (props) => {
    * so it wont be entering an infinite loop
    */
   const submitHandler = useCallback(() => {
-    console.log("Submitting!");
-  }, []); // we make sure this is an empty array so it doesn't have to be re-created
+    // this will check if we are editing or creating by checking editedProduct is not undefined
+    if (editedProduct) {
+      dispatch(
+        productActions.updateProduct(productId, title, description, imageUrl)
+      );
+    } else {
+      // this case, we are creating
+      dispatch(
+        productActions.createProduct(
+          title,
+          description,
+          imageUrl,
+          +price // this is the shorthand way of converting a string to a number
+        )
+      );
+    }
+    /**
+     * we need to make sure to add the dependencies because the useCallback function
+     * won't be recreated when the user enters in the data
+     */
+  }, [dispatch, productId, title, description, imageUrl, price]);
 
   /**
    * this will render a function after every render cycle
@@ -52,7 +78,8 @@ const EditProductScreen = (props) => {
           <TextInput
             style={styles.input}
             value={title}
-            onChange={(text) => setTitle(text)}
+            onChangeText={(text) => setTitle(text)}
+            // onChangeText is simple prop, that gives whatever is the value of the input field on every change.
           />
         </View>
         <View style={styles.formControl}>
@@ -60,7 +87,7 @@ const EditProductScreen = (props) => {
           <TextInput
             style={styles.input}
             value={imageUrl}
-            onChange={(text) => setImageUrl(text)}
+            onChangeText={(text) => setImageUrl(text)}
           />
         </View>
         {editedProduct ? null : (
@@ -69,7 +96,7 @@ const EditProductScreen = (props) => {
             <TextInput
               style={styles.input}
               value={price}
-              onChange={(text) => setPrice(text)}
+              onChangeText={(text) => setPrice(text)}
             />
           </View>
         )}
@@ -78,7 +105,7 @@ const EditProductScreen = (props) => {
           <TextInput
             style={styles.input}
             value={description}
-            onChange={(text) => setDescription(text)}
+            onChangeText={(text) => setDescription(text)}
           />
         </View>
       </View>

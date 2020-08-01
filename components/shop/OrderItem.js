@@ -6,7 +6,7 @@ import Colors from "../../constants/Colors";
 const OrderItem = (props) => {
   const { items, amount, date } = props;
   const [showDetails, setShowDetails] = useState(false);
-  console.log("items", items);
+
   return (
     <View style={styles.orderItem}>
       <View style={styles.summary}>
