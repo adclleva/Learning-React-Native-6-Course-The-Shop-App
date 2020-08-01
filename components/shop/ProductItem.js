@@ -9,6 +9,8 @@ import {
   Platform,
 } from "react-native";
 
+import Card from "../UI/Card";
+
 // this will be a presentational component
 
 const ProductItem = (props) => {
@@ -20,7 +22,7 @@ const ProductItem = (props) => {
       : TouchableOpacity;
 
   return (
-    <View style={styles.product}>
+    <Card style={styles.product}>
       <View style={styles.touchable}>
         <TouchableComponent onPress={onSelect} useForeground>
           {/* useForeground is used for the TouchableNativeFeedback to have the 
@@ -37,7 +39,7 @@ const ProductItem = (props) => {
           </View>
         </TouchableComponent>
       </View>
-    </View>
+    </Card>
   );
 };
 
@@ -45,18 +47,6 @@ export default ProductItem;
 
 const styles = StyleSheet.create({
   product: {
-    // shadow is for IOS
-    shadowColor: "#000",
-    shadowOpacity: 0.26,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowRadius: 8,
-    // elevation is for android
-    elevation: 5,
-    borderRadius: 10,
-    backgroundColor: "#fff",
     height: 300,
     margin: 20,
   },

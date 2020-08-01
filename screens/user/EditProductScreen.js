@@ -55,6 +55,8 @@ const EditProductScreen = (props) => {
         )
       );
     }
+
+    props.navigation.goBack();
     /**
      * we need to make sure to add the dependencies because the useCallback function
      * won't be recreated when the user enters in the data
